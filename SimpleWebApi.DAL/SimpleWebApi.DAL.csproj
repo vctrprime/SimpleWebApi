@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.0.90" />
+      <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.0-preview.5.21301.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="SqlQueries\Concrete\BreakingBad" />
+      <Folder Include="SqlQueries\ForRepositories\BreakingBad" />
+    </ItemGroup>
+
+</Project>
