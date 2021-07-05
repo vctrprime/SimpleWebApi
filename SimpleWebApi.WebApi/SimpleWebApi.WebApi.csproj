@@ -6,10 +6,12 @@
 
     <ItemGroup>
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+        <PackageReference Include="Q101.ServiceCollectionExtensions" Version="1.0.4" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\SimpleWebApi.DAL\SimpleWebApi.DAL.csproj" />
       <ProjectReference Include="..\SimpleWebApi.Profiles\SimpleWebApi.Profiles.csproj" />
     </ItemGroup>
 

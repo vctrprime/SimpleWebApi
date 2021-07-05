@@ -1,13 +1,14 @@
 using System;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace SimpleWebApi.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]s")]
     [ApiController]
-    //[BasicAuthorize]
     public class BaseApiController : ControllerBase
     {
         protected readonly IMapper Mapper;
