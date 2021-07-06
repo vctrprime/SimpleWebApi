@@ -23,7 +23,7 @@ namespace SimpleWebApi.WebApi.Controllers
         
         protected IActionResult BadRequestAction(Exception exception, string controllerName)
         {
-            //Logger.LogError(exception, controllerName);
+            Logger.LogError(exception, controllerName);
             return BadRequest(exception.Message);
         }
     }

@@ -27,7 +27,7 @@ namespace SimpleWebApi.WebApi.Controllers.BreakingBad
             {
                 IEnumerable<Quote> quotes = await _repository.Get();
                 var response = Mapper.Map<GetQuotesResponseDto>(quotes);
-
+                
                 return Ok(response);
             }
             catch(Exception exception)
