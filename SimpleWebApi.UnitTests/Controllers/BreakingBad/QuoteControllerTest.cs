@@ -35,7 +35,7 @@ namespace SimpleWebApi.UnitTests.Controllers.BreakingBad
 
         #region get
         [Fact]
-        public async Task GetListReturnsOkResult()
+        public async Task GetAllReturnsOkResult()
         {
             // Arrange
             _mock.Setup(repository => repository.Get())
@@ -50,7 +50,7 @@ namespace SimpleWebApi.UnitTests.Controllers.BreakingBad
         }
 
         [Fact]
-        public async Task GetListReturnsBadResult()
+        public async Task GetAllReturnsBadResult()
         {
             // Arrange
             _mock.Setup(repository => repository.Get())

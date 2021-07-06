@@ -1,33 +1,36 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using SimpleWebApi.DAL.Connection.Abstract;
 using SimpleWebApi.DAL.Repositories.Abstract.BreakingBad;
+using SimpleWebApi.DAL.SqlQueries.ForRepositories.BreakingBad;
 using SimpleWebApi.Domain.BreakingBad.Quotes;
 
 namespace SimpleWebApi.DAL.Repositories.Concrete.BreakingBad
 {
     public class QuoteRepository : BaseRepository, IQuoteRepository
     {
-        private readonly List<Quote> quotes;
+        private readonly QuoteRepositorySqlQueries _sqlQueries;
         
-        public QuoteRepository(IConnectionCreator connectionCreator) : base(connectionCreator)
+        public QuoteRepository(IConnectionCreator connectionCreator, QuoteRepositorySqlQueries sqlQueries) : base(connectionCreator)
         {
-            quotes = new List<Quote>
-            {
-                new Quote { Id = 1, Text = "text1", Author = "author1"},
-                new Quote { Id = 2, Text = "text2", Author = "author2"},
-            };
+            _sqlQueries = sqlQueries;
         }
 
         public async Task<IEnumerable<Quote>> Get()
         {
+            var quotes = await ConnectionCreator.Connection.QueryAsync<Quote>(_sqlQueries.GetAllQuotesSqlQuery.Value);
             return quotes;
         }
 
         public async Task<Quote> Get(int id)
         {
-            return quotes.FirstOrDefault(q => q.Id == id);
+            var quote = await ConnectionCreator.Connection.QueryFirstOrDefaultAsync<Quote>(_sqlQueries.GetQuoteSqlQuery.Value,
+                new
+                {
+                    idParameter = id
+                });
+            return quote;
         }
     }
 }
