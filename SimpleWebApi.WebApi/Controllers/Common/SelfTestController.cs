@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SimpleWebApi.DAL.Repositories.Abstract.Common;
 
-namespace SimpleWebApi.WebApi.Controllers
+namespace SimpleWebApi.WebApi.Controllers.Common
 {
     [AllowAnonymous]
     [Route("api/[controller]")]

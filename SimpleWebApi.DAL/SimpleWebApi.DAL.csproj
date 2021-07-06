@@ -14,4 +14,8 @@
       <Folder Include="SqlQueries\ForRepositories\BreakingBad" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SimpleWebApi.Domain\SimpleWebApi.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

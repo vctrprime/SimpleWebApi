@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SimpleWebApi.DAL.Repositories.Abstract.BreakingBad;
 using SimpleWebApi.Domain.BreakingBad.Quotes;
 using SimpleWebApi.DTO.BreakingBad;
 
@@ -12,16 +12,12 @@ namespace SimpleWebApi.WebApi.Controllers.BreakingBad
 {
     public class QuoteController : BaseApiController
     {
-        private List<Quote> quotes;
+        private readonly IQuoteRepository _repository;
         
-        public QuoteController(IMapper mapper, ILogger<QuoteController> logger)
+        public QuoteController(IMapper mapper, ILogger<QuoteController> logger, IQuoteRepository repository)
             : base(mapper, logger)
         {
-            quotes = new List<Quote>
-            {
-                new Quote { Id = 1, Text = "text1", Author = "author1"},
-                new Quote { Id = 2, Text = "text2", Author = "author2"},
-            };
+            _repository = repository;
         }
         
         [HttpGet]
@@ -29,6 +25,7 @@ namespace SimpleWebApi.WebApi.Controllers.BreakingBad
         {
             try
             {
+                IEnumerable<Quote> quotes = await _repository.Get();
                 var response = Mapper.Map<GetQuotesResponseDto>(quotes);
 
                 return Ok(response);
@@ -44,7 +41,7 @@ namespace SimpleWebApi.WebApi.Controllers.BreakingBad
         {
             try
             {
-                var quote = quotes.FirstOrDefault(q => q.Id == id);
+                Quote quote = await _repository.Get(id);
                 if (quote is null) return NotFound();
                 
                 return Ok(quote);

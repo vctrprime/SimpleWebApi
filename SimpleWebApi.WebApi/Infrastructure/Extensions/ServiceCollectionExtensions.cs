@@ -6,7 +6,9 @@ using Q101.ServiceCollectionExtensions.ServiceCollectionExtensions;
 using SimpleWebApi.DAL.Config;
 using SimpleWebApi.DAL.Connection.Abstract;
 using SimpleWebApi.DAL.Connection.Concrete;
+using SimpleWebApi.DAL.Repositories.Abstract.BreakingBad;
 using SimpleWebApi.DAL.Repositories.Abstract.Common;
+using SimpleWebApi.DAL.Repositories.Concrete.BreakingBad;
 using SimpleWebApi.DAL.Repositories.Concrete.Common;
 using SimpleWebApi.DAL.SqlQueries.Abstract;
 using SimpleWebApi.Profiles.BreakingBad;
@@ -40,6 +42,9 @@ namespace SimpleWebApi.WebApi.Infrastructure.Extensions
         {
             services.AddTransient<ISelfTestRepository, SelfTestRepository>();
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
+            
+            services.AddTransient<IQuoteRepository, QuoteRepository>();
+            
             return services;
         }
         
