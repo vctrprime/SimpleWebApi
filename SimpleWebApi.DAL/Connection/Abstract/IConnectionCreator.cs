@@ -1,10 +1,10 @@
 using System;
-using Microsoft.Data.Sqlite;
+using System.Data.Common;
 
 namespace SimpleWebApi.DAL.Connection.Abstract
 {
     public interface IConnectionCreator : IDisposable
     {
-        SqliteConnection Connection { get; }
+        DbConnection Connection { get; }
     }
 }

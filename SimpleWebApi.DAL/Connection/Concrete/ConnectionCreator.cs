@@ -1,4 +1,5 @@
 using System.Data;
+using System.Data.Common;
 using Microsoft.Data.Sqlite;
 using SimpleWebApi.DAL.Config;
 using SimpleWebApi.DAL.Connection.Abstract;
@@ -8,14 +9,14 @@ namespace SimpleWebApi.DAL.Connection.Concrete
     public class ConnectionCreator : IConnectionCreator
     {
         private readonly DbConfig _dbConfig;
-        private SqliteConnection _connection;
+        private DbConnection _connection;
 
         public ConnectionCreator(DbConfig dbConfig)
         {
             _dbConfig = dbConfig;
         }
 
-        public SqliteConnection Connection
+        public DbConnection Connection
         {
             get
             {
@@ -25,7 +26,7 @@ namespace SimpleWebApi.DAL.Connection.Concrete
             }
         }
 
-        private SqliteConnection CreateConnection()
+        private DbConnection CreateConnection()
         {
             _connection = new SqliteConnection(_dbConfig.ConnectionString);
 

@@ -18,6 +18,14 @@ namespace SimpleWebApi.WebApi.Infrastructure.Handlers
     {
         private readonly IAuthorizationRepository _repository;
         private string _failReason;
+
+        private const string HeaderName = "Authorization";
+        
+        public static readonly string SchemeName = nameof(BasicAuthenticationHandler).Replace("Handler", string.Empty);
+
+        public static readonly string MissingHeaderMessage = "Missing Authorization Header";
+        public static readonly string InvalidAuthorizationHeaderMessage = "Invalid Authorization Header";
+        public static readonly string InvalidCredentialsMessage = "Invalid Username or Password";
         
         public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
@@ -30,6 +38,7 @@ namespace SimpleWebApi.WebApi.Infrastructure.Handlers
             _repository = repository;
         }
         
+        
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             // skip authentication if endpoint has [AllowAnonymous] attribute
@@ -37,31 +46,27 @@ namespace SimpleWebApi.WebApi.Infrastructure.Handlers
             if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
                 return AuthenticateResult.NoResult();
 
-            if (!Request.Headers.ContainsKey("Authorization"))
-                return Fail("Missing Authorization Header");
+            if (!Request.Headers.ContainsKey(HeaderName))
+                return Fail(MissingHeaderMessage);
 
             bool isValidUser;
-            string username;
+            Claim[] claims;;
             try
             {
-                var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-                var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
-                var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
-                username = credentials[0];
-                var password = credentials[1];
+                var (username, password) = DecodeAuthHeader();
                 isValidUser = await _repository.IsValidUser(username, password);
+                claims = new[] {
+                    new Claim(ClaimTypes.Name, username),
+                };
             }
             catch
             {
-                return Fail("Invalid Authorization Header");
+                return Fail(InvalidAuthorizationHeaderMessage);
             }
 
             if (!isValidUser)
-                return Fail("Invalid Username or Password");
+                return Fail(InvalidCredentialsMessage);
 
-            var claims = new[] {
-                new Claim(ClaimTypes.Name, username),
-            };
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, Scheme.Name);
@@ -80,7 +85,18 @@ namespace SimpleWebApi.WebApi.Infrastructure.Handlers
 
             return Task.CompletedTask;
         }
+        
+        private (string username, string password) DecodeAuthHeader()
+        {
+            var authHeader = AuthenticationHeaderValue.Parse(Request.Headers[HeaderName]);
+            var credentialBytes = Convert.FromBase64String(authHeader.Parameter ?? string.Empty);
+            var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
+            var username = credentials[0];
+            var password = credentials[1];
 
+            return (username, password);
+        }
+        
         private AuthenticateResult Fail(string failReason)
         {
             _failReason = failReason;

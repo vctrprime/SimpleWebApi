@@ -30,14 +30,15 @@ namespace SimpleWebApi.WebApi.Infrastructure.Extensions
             services.AddSingleton(new DbConfig { ConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") });
             services.AddTransient<IConnectionCreator, ConnectionCreator>();
             
-            services.AddAuthentication("BasicAuthentication")
-                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+            services.AddAuthentication(BasicAuthenticationHandler.SchemeName)
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(BasicAuthenticationHandler.SchemeName, null);
             
             return services;
         }
         
         private static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
+            services.AddTransient<ISelfTestRepository, SelfTestRepository>();
             services.AddTransient<IAuthorizationRepository, AuthorizationRepository>();
             return services;
         }

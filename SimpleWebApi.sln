@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebApi.Domain", "Simp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebApi.DTO", "SimpleWebApi.DTO\SimpleWebApi.DTO.csproj", "{F6631470-3043-4341-91E6-E62FCA19AC31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebApi.UnitTests", "SimpleWebApi.UnitTests\SimpleWebApi.UnitTests.csproj", "{22B594B7-B655-4FE0-A6E3-C9B95DBDED54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{F6631470-3043-4341-91E6-E62FCA19AC31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6631470-3043-4341-91E6-E62FCA19AC31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6631470-3043-4341-91E6-E62FCA19AC31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22B594B7-B655-4FE0-A6E3-C9B95DBDED54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22B594B7-B655-4FE0-A6E3-C9B95DBDED54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22B594B7-B655-4FE0-A6E3-C9B95DBDED54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22B594B7-B655-4FE0-A6E3-C9B95DBDED54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9B07B8D7-C6AD-40EC-A58D-7FFDA51096C9} = {434AF7BD-3B9A-41B9-926F-4EF0328AAE41}
